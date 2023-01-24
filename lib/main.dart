@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/src/screens/home_screen.dart';
 import 'package:restaurant_app/src/screens/restaurant_screen_improved.dart';
+import 'package:csv/csv.dart';
+import 'package:flutter/services.dart';
 
 void main() {
+  // Added to use "Isolate / Compute".
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
