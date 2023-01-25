@@ -8,3 +8,12 @@ class AppColors {
   static const Color secondaryUofILightest = Color(0xFF68aff7);
   static const Color secondaryUofIDark = Color(0xFF1F4096);
 }
+
+const kOrangeBlue = LinearGradient(
+  colors: [
+    Color.fromARGB(255, 255, 115, 0),
+    Color.fromARGB(255, 0, 89, 255),
+  ],
+  begin: Alignment.centerLeft,
+  end: Alignment.centerRight,
+);

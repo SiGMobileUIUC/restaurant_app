@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/services.dart';
 import 'package:restaurant_app/src/screens/restaurant_info_pages.dart';
+import 'package:restaurant_app/src/misc/colors.dart';
 
 //Main widget to run restaurant screen
 class RestaurantScreen extends StatefulWidget {
@@ -23,6 +24,8 @@ class _MyHomePageState extends State<RestaurantScreen> {
       _data = listData;
     });
   }
+
+  int selectedIdx = 0;
 
   ScrollController scrollController = ScrollController(
     initialScrollOffset: 10, // or whatever offset you wish
@@ -64,33 +67,45 @@ class _MyHomePageState extends State<RestaurantScreen> {
           }
           return Card(
             margin: const EdgeInsets.all(3),
-            color: index == 0 ? Colors.amber : Colors.white,
+            color: index == selectedIdx ? Colors.blue : Colors.white,
             child: ListTile(
+              onTap: () {
+                setState(() {
+                  selectedIdx = index;
+                });
+              },
               title: Text(_data[index][0].toString()),
               subtitle: Text(_data[index][3].toString()),
               trailing: Wrap(
-                spacing: 20, // space between two icons
+                spacing: 30, // space between two icons
                 children: <Widget>[
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.teal,
-                      // Background color
-                      foregroundColor: Colors.white,
-                      // Text Color (Foreground color)
+                  DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: kOrangeBlue,
+                      borderRadius: BorderRadius.circular(15.0),
+                      border: Border.all(
+                        color: const Color.fromARGB(0, 255, 255, 255),
+                      ),
                     ),
-                    child: const Text('Visit'),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => RestaurantInfoPage(
-                                  name: _data[index][0].toString(),
-                                  openhr: _data[index][1].toString(),
-                                  closedhr: _data[index][2].toString(),
-                                  cuisine: _data[index][3].toString(),
-                                )),
-                      );
-                    },
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                        foregroundColor: Colors.white,
+                      ),
+                      child: const Text('Visit'),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => RestaurantInfoPage(
+                                    name: _data[index][0].toString(),
+                                    openhr: _data[index][1].toString(),
+                                    closedhr: _data[index][2].toString(),
+                                    cuisine: _data[index][3].toString(),
+                                  )),
+                        );
+                      },
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 13.0),
