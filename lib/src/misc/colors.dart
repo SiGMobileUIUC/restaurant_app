@@ -17,3 +17,12 @@ const kOrangeBlue = LinearGradient(
   begin: Alignment.centerLeft,
   end: Alignment.centerRight,
 );
+
+const kOrangeWhite = LinearGradient(
+  colors: [
+    Color.fromARGB(255, 255, 115, 0),
+    Color.fromARGB(255, 255, 255, 255),
+  ],
+  begin: Alignment.centerLeft,
+  end: Alignment.centerRight,
+);

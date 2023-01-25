@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/src/screens/home_screen.dart';
-import 'package:restaurant_app/src/screens/restaurant_list_screen.dart';
-import 'package:csv/csv.dart';
-import 'package:flutter/services.dart';
 
 void main() {
   // Added to use "Isolate / Compute".
@@ -15,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'UIUC eats app',
       theme: ThemeData(
         primarySwatch: Colors.deepOrange,
