@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/src/screens/home_screen.dart';
-import 'package:restaurant_app/src/screens/restaurant_screen_improved.dart';
+import 'package:restaurant_app/src/screens/restaurant_list_screen.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/services.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant_app/src/screens/restaurant_screen_improved.dart';
+import 'package:restaurant_app/src/screens/restaurant_list_screen.dart';
 
 //TitleScreen of restaurant page
 class HomeScreen extends StatefulWidget {
