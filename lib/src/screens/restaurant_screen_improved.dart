@@ -12,39 +12,26 @@ class RestaurantScreen extends StatefulWidget {
   State<RestaurantScreen> createState() => _MyHomePageState();
 }
 
-//Route to Mia Za's
-class SecondRoute extends StatelessWidget {
-  const SecondRoute({super.key});
+//Restaurant info page widget
+class RestaurantInfoPage extends StatelessWidget {
+  final String name;
+  final String openhr;
+  final String closedhr;
+  final String cuisine;
+
+  const RestaurantInfoPage({
+    Key? key,
+    required this.name,
+    required this.openhr,
+    required this.closedhr,
+    required this.cuisine,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Mia Za's"),
-      ),
-      body: Center(
-        child: Align(
-          alignment: FractionalOffset.bottomCenter,
-          child: ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text('Go back!'),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class ThirdRoute extends StatelessWidget {
-  const ThirdRoute({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Shawarma Joint"),
+        title: Text(name),
       ),
       body: Center(
           child: Column(
@@ -53,9 +40,9 @@ class ThirdRoute extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
-            child: const Text(
-              'Shawarma Joint',
-              style: TextStyle(
+            child: Text(
+              name,
+              style: const TextStyle(
                 color: Colors.deepPurple,
                 fontWeight: FontWeight.bold,
                 fontSize: 35,
@@ -63,9 +50,9 @@ class ThirdRoute extends StatelessWidget {
               ),
             ),
           ),
-          const Text(
-            'OPENING HOURS: 11:00 AM',
-            style: TextStyle(
+          Text(
+            'OPENING HOURS: $openhr',
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.green,
               fontSize: 20,
@@ -73,9 +60,9 @@ class ThirdRoute extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 0, 0, 90),
-            child: const Text(
-              'CLOSING HOURS: 10:00 PM',
-              style: TextStyle(
+            child: Text(
+              'CLOSING HOURS: $closedhr',
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.red,
                 fontSize: 20,
@@ -84,10 +71,11 @@ class ThirdRoute extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(5, 0, 5, 80),
-            child: const Text(
-              'A mediterranean restaurant thats famous for serving burritos and rice bowls. They are popular among the muslim population as they offer Halal meat.',
+            child: Text(
+              'A $cuisine restaurant.',
+              //thats famous for serving burritos and rice bowls. They are popular among the muslim population as they offer Halal meat.
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 15,
                 color: Colors.black,
@@ -177,7 +165,12 @@ class _MyHomePageState extends State<RestaurantScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const SecondRoute()),
+                            builder: (context) => RestaurantInfoPage(
+                                  name: _data[index][0].toString(),
+                                  openhr: _data[index][1].toString(),
+                                  closedhr: _data[index][2].toString(),
+                                  cuisine: _data[index][3].toString(),
+                                )),
                       );
                     },
                   ),
@@ -205,3 +198,23 @@ class _MyHomePageState extends State<RestaurantScreen> {
     );
   }
 }
+
+
+
+/*
+Might need for later if code doesn't work
+//Class for restaurant data
+class Restaurant {
+  final String name;
+  final String openhr;
+  final String closedhr;
+  final String cuisine;
+
+  const Restaurant({
+    required this.name,
+    required this.openhr,
+    required this.closedhr,
+    required this.cuisine,
+  });
+}
+*/
