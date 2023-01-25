@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/src/misc/colors.dart';
 
 class RestaurantAppBar extends StatelessWidget {
   const RestaurantAppBar({super.key});
@@ -13,15 +14,37 @@ class RestaurantAppBar extends StatelessWidget {
         ),
       ),
       leading: const Padding(
-        padding: EdgeInsets.only(left: 20),
+        padding: EdgeInsets.only(left: 15),
         child: CircleAvatar(
           backgroundColor: Colors.white,
+          foregroundColor: Colors.deepOrange,
           child: Icon(
-            Icons.arrow_back_ios_new_outlined,
+            Icons.settings,
             size: 20,
           ),
         ),
       ),
+      actions: const [
+        CircleAvatar(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.deepOrange,
+          child: Icon(
+            Icons.share,
+            size: 20,
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: CircleAvatar(
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.deepOrange,
+            child: Icon(
+              Icons.search,
+              size: 20,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
