@@ -3,9 +3,13 @@ import 'package:restaurant_app/src/misc/colors.dart';
 import 'package:restaurant_app/src/screens/restaurant_list_screen.dart';
 import 'package:restaurant_app/src/components/restaurant_appbar.dart';
 
+typedef CSVCallback = void Function();
+
 //TitleScreen of restaurant page
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({Key? key, this.csvFun}) : super(key: key);
+
+  CSVCallback? csvFun;
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -31,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       MaterialPageRoute(
                           builder: (context) =>
                               const RestaurantScreen(title: "UIUC Eats")),
+                      //csvFun();
                     );
                   },
                   child: const Text('Welcome'),
@@ -43,6 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
 
 
 

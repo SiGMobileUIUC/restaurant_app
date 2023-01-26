@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:restaurant_app/src/screens/restaurant_info_pages.dart';
 import 'package:restaurant_app/src/misc/colors.dart';
 import 'package:restaurant_app/src/components/restaurant_appbar.dart';
+import 'package:restaurant_app/src/screens/home_screen.dart';
 
 //Main widget to run restaurant screen
 class RestaurantScreen extends StatefulWidget {

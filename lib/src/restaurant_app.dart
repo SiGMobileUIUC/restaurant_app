@@ -37,7 +37,7 @@ class _RestaurantAppState extends State<RestaurantApp> {
           DefaultCupertinoLocalizations.delegate,
         ],
         title: "Bus App",
-        home: const HomeScreen(),
+        home: HomeScreen(),
         material: (_, __) => MaterialAppData(
           theme: ThemeData(
             brightness: Brightness.light,
@@ -72,7 +72,9 @@ class _RestaurantAppState extends State<RestaurantApp> {
           themeMode: ThemeMode.system,
         ),
         cupertino: (_, __) => CupertinoAppData(
-          theme: MediaQuery.of(context).platformBrightness == Brightness.light ? lightTheme : darkTheme,
+          theme: MediaQuery.of(context).platformBrightness == Brightness.light
+              ? lightTheme
+              : darkTheme,
         ),
       ),
     );
