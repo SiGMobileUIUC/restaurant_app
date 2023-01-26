@@ -160,54 +160,70 @@ class _MyHomePageState extends State<RestaurantScreen> {
                               color: const Color.fromARGB(0, 255, 255, 255),
                             ),
                           ),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                            ),
-                            child: Text(
-                              (curTime < startTime || curTime >= closeTime
-                                  ? "Closed"
-                                  : "Open"),
-                              style: const TextStyle(
-                                  color: Colors.red,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                  title: Text(
-                                      "${_data[index][0].toString()} Hours"),
-                                  content: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Text(
-                                        'OPENING HOURS: ${_data[index][1].toString()}',
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.green,
-                                          fontSize: 20,
+                          child: SizedBox(
+                            width: 76,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white,
+                              ),
+                              child: Text(
+                                (curTime <= 24)
+                                    ? ((curTime < startTime || curTime >= 24)
+                                        ? "Closed"
+                                        : "Open")
+                                    : ((curTime < startTime ||
+                                            curTime >= closeTime)
+                                        ? "Closed"
+                                        : "Open"),
+                                style: TextStyle(
+                                  color: (curTime <= 24)
+                                      ? ((curTime < startTime || curTime >= 24)
+                                          ? Colors.red
+                                          : Colors.green)
+                                      : ((curTime < startTime ||
+                                              curTime >= closeTime)
+                                          ? Colors.red
+                                          : Colors.green),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: Text(
+                                        "${_data[index][0].toString()} Hours"),
+                                    content: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          'OPENING HOURS: ${_data[index][1].toString()}',
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.green,
+                                            fontSize: 20,
+                                          ),
                                         ),
-                                      ),
-                                      Text(
-                                        'CLOSING HOURS: ${_data[index][2].toString()}',
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.red,
-                                          fontSize: 20,
+                                        Text(
+                                          'CLOSING HOURS: ${_data[index][2].toString()}',
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.red,
+                                            fontSize: 20,
+                                          ),
                                         ),
+                                      ],
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        child: const Text("ok"),
+                                        onPressed: () => Navigator.pop(context),
                                       ),
                                     ],
                                   ),
-                                  actions: [
-                                    TextButton(
-                                      child: const Text("ok"),
-                                      onPressed: () => Navigator.pop(context),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
+                                );
+                              },
+                            ),
                           ),
                         ), // icon-2
                       ],
