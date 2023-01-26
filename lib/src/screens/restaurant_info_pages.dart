@@ -43,10 +43,10 @@ class RestaurantInfoPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 0, 0, 90),
             child: Text(
-              'CLOSING HOURS: $openhr',
+              'OPENING HOURS: $openhr',
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Colors.red,
+                color: Colors.green,
                 fontSize: 20,
               ),
             ),
