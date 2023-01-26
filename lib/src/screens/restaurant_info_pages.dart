@@ -40,12 +40,15 @@ class RestaurantInfoPage extends StatelessWidget {
               ),
             ),
           ),
-          Text(
-            'OPENING HOURS: $openhr',
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.green,
-              fontSize: 20,
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 0, 0, 90),
+            child: Text(
+              'CLOSING HOURS: $openhr',
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.red,
+                fontSize: 20,
+              ),
             ),
           ),
           Padding(

@@ -124,14 +124,63 @@ class _MyHomePageState extends State<RestaurantScreen> {
                             },
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 13.0),
-                          child: Text(
-                            (curTime < startTime || curTime >= closeTime
-                                ? "Closed"
-                                : "Open"),
-                            style: const TextStyle(
-                                color: Colors.red, fontWeight: FontWeight.bold),
+                        DecoratedBox(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15.0),
+                            border: Border.all(
+                              color: const Color.fromARGB(0, 255, 255, 255),
+                            ),
+                          ),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                            ),
+                            child: Text(
+                              (curTime < startTime || curTime >= closeTime
+                                  ? "Closed"
+                                  : "Open"),
+                              style: const TextStyle(
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: Text(
+                                      "${_data[index][0].toString()} Thai Hours"),
+                                  content: Expanded(
+                                    flex: 1,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'OPENING HOURS: ${_data[index][1].toString()}',
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.green,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              0, 0, 0, 90),
+                                          child: Text(
+                                            'CLOSING HOURS: ${_data[index][2].toString()}',
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.red,
+                                              fontSize: 20,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                         ), // icon-2
                       ],
