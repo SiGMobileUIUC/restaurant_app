@@ -27,6 +27,15 @@ class _MyHomePageState extends State<RestaurantScreen> {
     });
   }
 
+  //List of cuisines
+  List<String> cuisines = [];
+  void sortCuisines() {
+    for (int x = 0; x < _data.length; x++) {
+      cuisines.add(_data[x][3].toString());
+    }
+    cuisines = cuisines.toSet().toList();
+  }
+
   int selectedIdx = 0;
 
   ScrollController scrollController = ScrollController(
@@ -61,9 +70,10 @@ class _MyHomePageState extends State<RestaurantScreen> {
                 size: 30,
               ),
               onPressed: () {
+                sortCuisines();
                 showSearch(
                   context: context,
-                  delegate: MySearchDelgate(),
+                  delegate: MySearchDelgate(cuisines: cuisines),
                 );
               },
             ),
@@ -220,6 +230,8 @@ class _MyHomePageState extends State<RestaurantScreen> {
 }
 
 class MySearchDelgate extends SearchDelegate {
+  final List<String> cuisines;
+  MySearchDelgate({required this.cuisines});
   @override
   Widget? buildLeading(BuildContext context) => IconButton(
         //Closes the search bar
@@ -243,8 +255,39 @@ class MySearchDelgate extends SearchDelegate {
       ];
 
   @override
-  Widget buildResults(BuildContext context) => Container();
+  Widget buildResults(BuildContext context) => Center(
+        child: Text(
+          query,
+          style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+        ),
+      );
 
   @override
-  Widget buildSuggestions(BuildContext context) => Container();
+  Widget buildSuggestions(BuildContext context) {
+    //List of restaurant cuisines from csv file
+    List<String> suggestions = cuisines.where((searchResult) {
+      //Checks each of the suggestions if the item in search bar = cuisines
+      final result = searchResult.toLowerCase();
+      //Sets input var from text in search bar
+      final input = query.toLowerCase();
+
+      return result.contains(input);
+    }).toList();
+    return ListView.builder(
+      itemCount: suggestions.length,
+      itemBuilder: (context, index) {
+        final suggestion = suggestions[index];
+        //Shows a list tile of all the cuisines
+        return ListTile(
+          title: Text(suggestion),
+          //Places the cuisine selected into search bar after clicking it
+          onTap: () {
+            query = suggestion;
+
+            showResults(context);
+          },
+        );
+      },
+    );
+  }
 }
