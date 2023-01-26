@@ -51,6 +51,24 @@ class _MyHomePageState extends State<RestaurantScreen> {
           ),
         ),
         title: const Text("UIUC Eats"),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: IconButton(
+              icon: const Icon(
+                Icons.search,
+                color: Colors.deepOrange,
+                size: 30,
+              ),
+              onPressed: () {
+                showSearch(
+                  context: context,
+                  delegate: MySearchDelgate(),
+                );
+              },
+            ),
+          ),
+        ],
       ),
       body: CustomScrollView(
         slivers: [
@@ -106,6 +124,7 @@ class _MyHomePageState extends State<RestaurantScreen> {
                           ),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
+                              elevation: 0.0,
                               backgroundColor: Colors.transparent,
                               foregroundColor: Colors.white,
                             ),
@@ -198,4 +217,34 @@ class _MyHomePageState extends State<RestaurantScreen> {
       // Display the contents from the CSV file
     );
   }
+}
+
+class MySearchDelgate extends SearchDelegate {
+  @override
+  Widget? buildLeading(BuildContext context) => IconButton(
+        //Closes the search bar
+        onPressed: () => close(context, null),
+        icon: const Icon(Icons.arrow_back),
+      );
+
+  @override
+  List<Widget>? buildActions(BuildContext context) => [
+        IconButton(
+          onPressed: () {
+            //If searchbar is already empty when clicked, close the search bar
+            if (query.isEmpty) {
+              close(context, null);
+            }
+            //Clears the text put into the search bar
+            query = '';
+          },
+          icon: const Icon(Icons.clear),
+        ),
+      ];
+
+  @override
+  Widget buildResults(BuildContext context) => Container();
+
+  @override
+  Widget buildSuggestions(BuildContext context) => Container();
 }
