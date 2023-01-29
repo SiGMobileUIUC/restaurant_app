@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:restaurant_app/src/screens/restaurant_info_pages.dart';
 import 'package:restaurant_app/src/misc/colors.dart';
 import 'package:restaurant_app/src/components/restaurant_appbar.dart';
+import 'package:restaurant_app/src/components/search_bar.dart';
 import 'package:restaurant_app/src/screens/home_screen.dart';
 
 //Main widget to run restaurant screen
@@ -17,12 +18,17 @@ class RestaurantScreen extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<RestaurantScreen> {
+  //We use a dynamic type to avoid issues while parsing the CSV into the nested lists of data
   List<List<dynamic>> _data = [];
+  //Imported a dayTime package that allows us to get the current time/date when app loads of the current timezone
   var datetime = DateTime.now();
 
+  //Using an async function to load the data from the CSV so that the function can be called when we press a button
   void _loadCSV() async {
+    //We set the location of the CSV in the assets folder and accessed it using RootBundle to load it as a string to pass it into the CSVToListConverter
     final rawData = await rootBundle.loadString("assets/Restaurants.csv");
     List<List<dynamic>> listData = const CsvToListConverter().convert(rawData);
+    //Using setState to update the class variable with the converted CSV
     setState(() {
       _data = listData;
     });
@@ -30,8 +36,10 @@ class _MyHomePageState extends State<RestaurantScreen> {
 
   //List of cuisines
   List<String> cuisines = [];
+
   void sortCuisines() {
     for (int x = 0; x < _data.length; x++) {
+      //Set the list of cuisines with the values obtained from parsing the CSV
       cuisines.add(_data[x][3].toString());
     }
     cuisines = cuisines.toSet().toList();
@@ -39,6 +47,7 @@ class _MyHomePageState extends State<RestaurantScreen> {
 
   int selectedIdx = 0;
 
+  //Scroll controller created so that we can can use the ListView.builder effectively
   ScrollController scrollController = ScrollController(
     initialScrollOffset: 10, // or whatever offset you wish
     keepScrollOffset: true,
@@ -48,7 +57,9 @@ class _MyHomePageState extends State<RestaurantScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        //Instead of using an AppBar widget we use a flexible space to replace the appbar with a widget of our choosing
         flexibleSpace: Container(
+          //We use DecoratedBox to allow us to use a gradient in the AppBar
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.centerLeft,
@@ -71,9 +82,11 @@ class _MyHomePageState extends State<RestaurantScreen> {
                 size: 30,
               ),
               onPressed: () {
+                //Sorts the cuisines and runs the search bar with the passed cuisines as a parameters
                 sortCuisines();
                 showSearch(
                   context: context,
+                  //Created a search bar in the Appbar that connects to SearchDelegate class we have overwritten to suggest and search for cuisines
                   delegate: MySearchDelgate(cuisines: cuisines),
                 );
               },
@@ -83,19 +96,24 @@ class _MyHomePageState extends State<RestaurantScreen> {
       ),
       body: CustomScrollView(
         slivers: [
+          //Slivers allow you to have multiple scrollable widgets on the screen at the same time
           SliverToBoxAdapter(
+            //Listview builder to create similar looking tiles of all the restaurants and their information
             child: ListView.builder(
               controller: scrollController,
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               itemCount: _data.length,
               itemBuilder: (_, index) {
+                //Parse the dayTime var to only have hours so that we can compare with hourse in CSV
                 int curTime = int.parse(datetime.hour.toString());
+                //We first splite the hours variable from CSV to make sure it's a RegExp variable so that we get no null errors
                 var checkstartTime = _data[index][1]
                     .toString()
                     .split(':')[0]
                     .replaceAll(RegExp(r'[^0-9]'), '');
                 int startTime;
+                //We check if parsed hours var returned a valid number or was empty and set time accordingly
                 if (checkstartTime == "") {
                   startTime = 0;
                 } else {
@@ -113,19 +131,26 @@ class _MyHomePageState extends State<RestaurantScreen> {
                 }
                 return Card(
                   margin: const EdgeInsets.all(3),
+                  //We set the color of a selected tile different than that of a non-selected tile
                   color: index == selectedIdx ? Colors.blue : Colors.white,
                   child: ListTile(
                     onTap: () {
                       setState(() {
+                        //Updates Index of tile selected so that we can change color of it
                         selectedIdx = index;
                       });
                     },
+                    //Title is name of restaurant
                     title: Text(_data[index][0].toString()),
+                    //Subtitle is cuisine of restaurant
                     subtitle: Text(_data[index][3].toString()),
+                    //We trail with 2 buttons, one to visit screen of restaurants information
+                    //Other button shows easy access to opening and closing times of restaurant
                     trailing: Wrap(
                       spacing: 30, // space between two icons
                       children: <Widget>[
                         DecoratedBox(
+                          //Used decoratedbox to create UIUC colors gradient on button
                           decoration: BoxDecoration(
                             gradient: kOrangeBlue,
                             borderRadius: BorderRadius.circular(15.0),
@@ -134,6 +159,7 @@ class _MyHomePageState extends State<RestaurantScreen> {
                             ),
                           ),
                           child: ElevatedButton(
+                            //Made elevated button invisible so that we can have a gradient on a Text widget but have it still function as a button
                             style: ElevatedButton.styleFrom(
                               elevation: 0.0,
                               backgroundColor: Colors.transparent,
@@ -144,6 +170,7 @@ class _MyHomePageState extends State<RestaurantScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
+                                    //When we click on the visit button to see the restaurants information we passed on the parameters about the restaurant
                                     builder: (context) => RestaurantInfoPage(
                                           name: _data[index][0].toString(),
                                           openhr: _data[index][1].toString(),
@@ -168,6 +195,7 @@ class _MyHomePageState extends State<RestaurantScreen> {
                                 backgroundColor: Colors.white,
                               ),
                               child: Text(
+                                //Conditionals to check if current time is past midnight or not and compare int values of times
                                 (curTime <= 24)
                                     ? ((curTime < startTime || curTime >= 24)
                                         ? "Closed"
@@ -246,6 +274,7 @@ class _MyHomePageState extends State<RestaurantScreen> {
   }
 }
 
+//Extended SearchDelegate class to help with functions needed when using a searchBar
 class MySearchDelgate extends SearchDelegate {
   final List<String> cuisines;
   MySearchDelgate({required this.cuisines});
