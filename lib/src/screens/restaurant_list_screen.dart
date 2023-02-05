@@ -54,6 +54,13 @@ class _MyHomePageState extends State<RestaurantScreen> {
   );
 
   @override
+  void initState() {
+    super.initState();
+    //We call the function to load the CSV when the app loads
+    _loadCSV();
+    sortCuisines();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
