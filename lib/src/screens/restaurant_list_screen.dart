@@ -8,6 +8,8 @@ import 'package:restaurant_app/src/components/restaurant_appbar.dart';
 import 'package:restaurant_app/src/components/search_bar.dart';
 import 'package:restaurant_app/src/screens/home_screen.dart';
 
+import '../components/chip_builder.dart';
+
 //Main widget to run restaurant screen
 class RestaurantScreen extends StatefulWidget {
   const RestaurantScreen({super.key, required this.title});
@@ -103,6 +105,10 @@ class _MyHomePageState extends State<RestaurantScreen> {
       ),
       body: CustomScrollView(
         slivers: [
+          SliverToBoxAdapter(
+            child: buildChip(cuisines: _data),
+          ),
+
           //Slivers allow you to have multiple scrollable widgets on the screen at the same time
           SliverToBoxAdapter(
             //Listview builder to create similar looking tiles of all the restaurants and their information
