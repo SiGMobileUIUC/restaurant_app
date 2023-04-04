@@ -90,14 +90,21 @@ class _MyHomePageState extends State<RestaurantScreen> {
                 color: Colors.deepOrange,
                 size: 30,
               ),
-              onPressed: () {
+              onPressed: () async {
                 //Sorts the cuisines and runs the search bar with the passed cuisines as a parameters
                 sortCuisines();
-                showSearch(
+                final searchResults = await showSearch(
                   context: context,
                   //Created a search bar in the Appbar that connects to SearchDelegate class we have overwritten to suggest and search for cuisines
                   delegate: MySearchDelgate(cuisines: cuisines),
                 );
+                setState(() {
+                  _data = _data
+                      .where((data) => data[3]
+                          .toLowerCase()
+                          .contains(searchResults.toLowerCase()))
+                      .toList();
+                });
               },
             ),
           ),
