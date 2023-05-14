@@ -27,12 +27,15 @@ class MySearchDelgate extends SearchDelegate {
       ];
 
   @override
-  Widget buildResults(BuildContext context) => Center(
-        child: Text(
-          query,
-          style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-        ),
-      );
+  Widget buildResults(BuildContext context) {
+    // unused
+    return const SizedBox();
+  }
+
+  @override
+  void showResults(BuildContext context) {
+    close(context, query);
+  }
 
   @override
   Widget buildSuggestions(BuildContext context) {
